@@ -13,8 +13,8 @@ namespace Ortiz__Christian___GOL
     public partial class Form1 : Form
     {
         // The universe array
-        bool[,] universe = new bool[100, 100];
-        bool[,] scratchPad = new bool[100, 100];
+        bool[,] universe = new bool[20, 20];
+        bool[,] scratchPad = new bool[20, 20];
 
         // Drawing colors
         Color gridColor = Color.Black;
@@ -49,25 +49,16 @@ namespace Ortiz__Christian___GOL
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
                     // get neighbor count for each cell
-                    int finiteCount = CountNeighborsFinite(x, y);
+                    int finiteCount = CountNeighborsToroidal(x, y);
 
                     // Applying rules to cells
-                    // underpopulation, cell dies
-                    if (universe[x, y] == true && finiteCount < 2)
-                    {
-                        scratchPad[x, y] = false;
-                    }
-                    // overpopulation, cell dies
-                    else if (universe[x, y] == true && finiteCount > 3)
+                    // Underpopulation/Overpopulation, cell dies
+                    if (universe[x, y] == true && finiteCount < 2 || finiteCount > 3)
                     {
                         scratchPad[x, y] = false;
                     }
                     // living cell lives into next generation
-                    else if (universe[x, y] == true && finiteCount == 2)
-                    {
-                        scratchPad[x, y] = true;
-                    }
-                    else if (universe[x, y] == true && finiteCount == 3)
+                    else if (universe[x, y] == true && finiteCount == 2 || finiteCount == 3)
                     {
                         scratchPad[x, y] = true;
                     }
@@ -76,8 +67,7 @@ namespace Ortiz__Christian___GOL
                     {
                         scratchPad[x, y] = true;
                     }
-                    // Turn cell on/off in the scratchPad
-                    // this can be done
+
                 }
             }
 
@@ -95,6 +85,7 @@ namespace Ortiz__Christian___GOL
                     scratchPad[x, y] = false;
                 }
             }
+
             // Increment generation count
             generations++;
 
@@ -174,6 +165,7 @@ namespace Ortiz__Christian___GOL
                 {
                     int xCheck = (x + xOffset + xLen) % xLen;
                     int yCheck = (y + yOffset + yLen) % yLen;
+
                     // if xOffset and yOffset are both equal to 0 then continue
                     if (xOffset == 0 && yOffset == 0)
                     {
@@ -213,7 +205,7 @@ namespace Ortiz__Christian___GOL
         #region Paint/Mouse Click
         private void graphicsPanel1_Paint(object sender, PaintEventArgs e)
         {
-            // FLoats Will make program look better
+
             // Calculate the width and height of each cell in pixels
             // CELL WIDTH = WINDOW WIDTH / NUMBER OF CELLS IN X
             float cellWidth = (float)graphicsPanel1.ClientSize.Width / universe.GetLength(0);
@@ -303,7 +295,7 @@ namespace Ortiz__Christian___GOL
 
         #endregion
 
-        #region File new
+        #region File new & new button
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // reset generations
@@ -347,6 +339,41 @@ namespace Ortiz__Christian___GOL
                 }
             }
             // invalidate graphics
+            graphicsPanel1.Invalidate();
+        }
+        #endregion
+
+
+        #region Random Seed
+        private void randomSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // reset generations
+            generations = 0;
+            // Update status strip generations
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            // pause timer
+            timer.Enabled = false;
+            // create instance of random
+            Random rnd = new Random();
+            // iterate through universe x and y axis
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    // create random number between 0 and 2
+                    int randomNum = rnd.Next(0, 3);
+                    if (randomNum == 0)
+                    {
+                        // if random number is 0 cell is alive (on)
+                        universe[x, y] = true;
+                    }
+                    else
+                    {
+                        // if any other number cell is dead (off)
+                        universe[x, y] = false;
+                    }
+                }
+            }
             graphicsPanel1.Invalidate();
         }
         #endregion
