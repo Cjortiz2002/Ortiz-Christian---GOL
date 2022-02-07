@@ -210,7 +210,7 @@ namespace Ortiz__Christian___GOL
             // CELL WIDTH = WINDOW WIDTH / NUMBER OF CELLS IN X
             float cellWidth = (float)graphicsPanel1.ClientSize.Width / universe.GetLength(0);
             // CELL HEIGHT = WINDOW HEIGHT / NUMBER OF CELLS IN Y
-            float cellHeight = (float)(graphicsPanel1.ClientSize.Height / universe.GetLength(1));
+            float cellHeight = (float)graphicsPanel1.ClientSize.Height / universe.GetLength(1);
 
             // A Pen for drawing the grid lines (color, width)
             Pen gridPen = new Pen(gridColor, 1);
@@ -224,6 +224,14 @@ namespace Ortiz__Christian___GOL
                 // Iterate through the universe in the x, left to right
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
+                    // printing number of neighbors in the middle of cells
+                    int neighbors = CountNeighborsFinite(x, y);
+                    Font font = new Font("Arial", 10f);
+
+                    StringFormat stringFormat = new StringFormat();
+                    stringFormat.Alignment = StringAlignment.Center;
+                    stringFormat.LineAlignment = StringAlignment.Center;
+
                     // A rectangle to represent each cell in pixels
                     RectangleF cellRect = RectangleF.Empty;
                     cellRect.X = x * cellWidth;
@@ -239,6 +247,8 @@ namespace Ortiz__Christian___GOL
 
                     // Outline the cell with a pen
                     e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+                    e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Black, cellRect, stringFormat);
+
                 }
             }
 
@@ -254,7 +264,7 @@ namespace Ortiz__Christian___GOL
             {
                 // Calculate the width and height of each cell in pixels
                 float cellWidth = (float)graphicsPanel1.ClientSize.Width / universe.GetLength(0);
-                float cellHeight = (float)(graphicsPanel1.ClientSize.Height / universe.GetLength(1));
+                float cellHeight = (float)graphicsPanel1.ClientSize.Height / universe.GetLength(1);
                 // Calculate the cell that was clicked in
                 // CELL X = MOUSE X / CELL WIDTH
                 int x = (int)(e.X / cellWidth);
