@@ -247,7 +247,11 @@ namespace Ortiz__Christian___GOL
 
                     // Outline the cell with a pen
                     e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
-                    e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Black, cellRect, stringFormat);
+                    if (neighbors > 0)
+                    {
+                        e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Black, cellRect, stringFormat);
+
+                    }
 
                 }
             }
@@ -318,15 +322,8 @@ namespace Ortiz__Christian___GOL
             timer.Enabled = false;
 
             // iterate through universe y axis
-            for (int y = 0; y < universe.GetLength(1); y++)
-            {
-                // iterate through universe x axis
-                for (int x = 0; x < universe.GetLength(0); x++)
-                {
-                    // reset universe
-                    universe[x, y] = false;
-                }
-            }
+            Array.Clear(universe, 0, universe.Length);
+
             // invalidate graphics
             graphicsPanel1.Invalidate();
         }
@@ -437,5 +434,30 @@ namespace Ortiz__Christian___GOL
             graphicsPanel1.Invalidate();
         }
         #endregion
+
+        private void ResetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // reset generations
+            generations = 0;
+            // Update status strip generations
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+           
+            // pause and reset timer 
+            timer.Enabled = false;
+            timer.Interval = 100;
+
+            // reset colors
+            gridColor = Color.Black;
+            cellColor = Color.Gray;
+            graphicsPanel1.BackColor = Color.White;
+
+            // reset universe to default 20 x 20 size
+            ResizeUniverse(20, 20, ref universe, ref scratchPad);
+            // iterate through universe y axis
+            Array.Clear(universe, 0, universe.Length);
+
+            // invalidate graphics
+            graphicsPanel1.Invalidate();
+        }
     }
 }
