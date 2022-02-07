@@ -305,29 +305,8 @@ namespace Ortiz__Christian___GOL
 
         #endregion
 
-        #region File new & new button
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // reset generations
-            generations = 0;
-            // Update status strip generations
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
-            // pause timer
-            timer.Enabled = false;
-
-            // iterate through universe y axis
-            for (int y = 0; y < universe.GetLength(1); y++)
-            {
-                // iterate through universe x axis
-                for (int x = 0; x < universe.GetLength(0); x++)
-                {
-                    // reset universe
-                    universe[x, y] = false;
-                }
-            }
-            // invalidate graphics
-            graphicsPanel1.Invalidate();
-        }
+        #region File new
+       
 
         private void newToolStripButton_Click(object sender, EventArgs e)
         {
@@ -352,7 +331,6 @@ namespace Ortiz__Christian___GOL
             graphicsPanel1.Invalidate();
         }
         #endregion
-
 
         #region Random Seed
         private void randomSeedToolStripMenuItem_Click(object sender, EventArgs e)
@@ -387,5 +365,48 @@ namespace Ortiz__Christian___GOL
             graphicsPanel1.Invalidate();
         }
         #endregion
+
+        #region Color Dialog
+        private void backColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+
+            dlg.Color = graphicsPanel1.BackColor;
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                graphicsPanel1.BackColor = dlg.Color;
+                graphicsPanel1.Invalidate();
+            }
+
+        }
+
+        private void gridColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+
+            dlg.Color = gridColor;
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                gridColor = dlg.Color;
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void cellColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+
+            dlg.Color = cellColor;
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                cellColor = dlg.Color;
+                graphicsPanel1.Invalidate();
+            }
+        }
+        #endregion
+
     }
 }
