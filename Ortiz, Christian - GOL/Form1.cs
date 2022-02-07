@@ -20,6 +20,8 @@ namespace Ortiz__Christian___GOL
         Color gridColor = Color.Black;
         Color cellColor = Color.Gray;
 
+        int gridWidth = 20;
+        int gridHeight = 20;
         // The Timer class
         Timer timer = new Timer();
 
@@ -67,6 +69,10 @@ namespace Ortiz__Christian___GOL
                     {
                         scratchPad[x, y] = true;
                     }
+                    else
+                    {
+                        scratchPad[x, y] = false;
+                    }
 
                 }
             }
@@ -78,13 +84,7 @@ namespace Ortiz__Christian___GOL
             scratchPad = temp;
 
             // clear out scratchpad
-            for (int y = 0; y < scratchPad.GetLength(1); y++)
-            {
-                for (int x = 0; x < scratchPad.GetLength(0); x++)
-                {
-                    scratchPad[x, y] = false;
-                }
-            }
+            Array.Clear(scratchPad, 0, scratchPad.Length);
 
             // Increment generation count
             generations++;
@@ -288,12 +288,12 @@ namespace Ortiz__Christian___GOL
         #endregion
 
         #region Run/Pause/Next
-        private void runtoolStripButton1_Click(object sender, EventArgs e)
+        private void RuntoolStripButton1_Click(object sender, EventArgs e)
         {
             timer.Enabled = true;
         }
 
-        private void pausetoolStripButton_Click(object sender, EventArgs e)
+        private void PausetoolStripButton_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
         }
@@ -306,9 +306,9 @@ namespace Ortiz__Christian___GOL
         #endregion
 
         #region File new
-       
 
-        private void newToolStripButton_Click(object sender, EventArgs e)
+
+        private void NewToolStripButton_Click(object sender, EventArgs e)
         {
             // reset generations
             generations = 0;
@@ -333,7 +333,7 @@ namespace Ortiz__Christian___GOL
         #endregion
 
         #region Random Seed
-        private void randomSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RandomSeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // reset generations
             generations = 0;
@@ -367,7 +367,7 @@ namespace Ortiz__Christian___GOL
         #endregion
 
         #region Color Dialog
-        private void backColorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void BackColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog dlg = new ColorDialog();
 
@@ -381,7 +381,7 @@ namespace Ortiz__Christian___GOL
 
         }
 
-        private void gridColorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void GridColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog dlg = new ColorDialog();
 
@@ -394,7 +394,7 @@ namespace Ortiz__Christian___GOL
             }
         }
 
-        private void cellColorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CellColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog dlg = new ColorDialog();
 
@@ -408,5 +408,34 @@ namespace Ortiz__Christian___GOL
         }
         #endregion
 
+        #region Options
+        private void OptionsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            OptionsDialog dlg = new OptionsDialog();
+            dlg.UniHeight = gridHeight;
+            dlg.UniWidth = gridWidth;
+            dlg.GenInterval = timer.Interval;
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+
+                if (dlg.UniHeight != gridHeight || dlg.UniWidth != gridWidth)
+                {
+                    ResizeUniverse(dlg.UniHeight, dlg.UniWidth, ref universe, ref scratchPad);
+
+                }
+                timer.Interval = dlg.GenInterval;
+
+            }
+        }
+
+        private void ResizeUniverse(int height, int width, ref bool[,] tempunivers, ref bool[,] tempScratchpad)
+        {
+            gridHeight = height;
+            gridWidth = width;
+            universe = new bool[gridWidth, gridHeight];
+            scratchPad = new bool[gridWidth, gridHeight];
+            graphicsPanel1.Invalidate();
+        }
+        #endregion
     }
 }
