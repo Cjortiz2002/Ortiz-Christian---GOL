@@ -16,12 +16,17 @@ namespace Ortiz__Christian___GOL
         bool[,] universe = new bool[20, 20];
         bool[,] scratchPad = new bool[20, 20];
 
+        // grid dimensions
+        int gridWidth = 20;
+        int gridHeight = 20;
+
         // Drawing colors
         Color gridColor = Color.Black;
         Color cellColor = Color.Gray;
 
-        int gridWidth = 20;
-        int gridHeight = 20;
+        // livng cells
+        int livingCells = 0;
+
         // The Timer class
         Timer timer = new Timer();
 
@@ -68,6 +73,7 @@ namespace Ortiz__Christian___GOL
                     else if (universe[x, y] == false && finiteCount == 3)
                     {
                         scratchPad[x, y] = true;
+
                     }
                     else
                     {
@@ -92,6 +98,7 @@ namespace Ortiz__Christian___GOL
             // Update status strip generations
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
 
+
             // Invalidate the graphics panel
             graphicsPanel1.Invalidate();
         }
@@ -102,8 +109,10 @@ namespace Ortiz__Christian___GOL
         private void Timer_Tick(object sender, EventArgs e)
         {
             NextGeneration();
+            GetLivingCells(ref universe);
         }
         #endregion
+
 
         #region Count Neighbors
 
@@ -310,8 +319,6 @@ namespace Ortiz__Christian___GOL
         #endregion
 
         #region File new
-
-
         private void NewToolStripButton_Click(object sender, EventArgs e)
         {
             // reset generations
@@ -435,13 +442,14 @@ namespace Ortiz__Christian___GOL
         }
         #endregion
 
+        #region Reset Universe
         private void ResetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // reset generations
             generations = 0;
             // Update status strip generations
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
-           
+
             // pause and reset timer 
             timer.Enabled = false;
             timer.Interval = 100;
@@ -459,5 +467,27 @@ namespace Ortiz__Christian___GOL
             // invalidate graphics
             graphicsPanel1.Invalidate();
         }
+        #endregion
+
+        #region Get Living cells
+        private void GetLivingCells(ref bool[,] tempuniverse)
+        {
+            livingCells = 0;
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                // iterate through universe x axis
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+
+                    if (universe[x, y] == true)
+                    {
+                        livingCells++;
+                    }
+                }
+            }
+            toolStripStatusLabelLivingCells.Text = "Living Cells = " + livingCells.ToString();
+
+        } 
+        #endregion
     }
 }

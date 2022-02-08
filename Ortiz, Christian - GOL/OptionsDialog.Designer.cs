@@ -185,7 +185,7 @@ namespace Ortiz__Christian___GOL
         #endregion
 
         private System.Windows.Forms.Button OKButton;
-        private System.Windows.Forms.Button CancelButton;
+        private new System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.NumericUpDown NumericUpDownHeight;
         private System.Windows.Forms.NumericUpDown NumericUpDownWidth;
         private System.Windows.Forms.NumericUpDown GenerationInterval;
