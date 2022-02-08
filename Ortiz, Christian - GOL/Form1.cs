@@ -12,6 +12,7 @@ namespace Ortiz__Christian___GOL
 {
     public partial class Form1 : Form
     {
+        #region Member Fields
         // The universe array
         bool[,] universe = new bool[20, 20];
         bool[,] scratchPad = new bool[20, 20];
@@ -31,7 +32,9 @@ namespace Ortiz__Christian___GOL
         Timer timer = new Timer();
 
         // Generation count
-        int generations = 0;
+        int generations = 0; 
+
+        #endregion
 
         #region Constructor
         public Form1()
@@ -112,7 +115,6 @@ namespace Ortiz__Christian___GOL
             GetLivingCells(ref universe);
         }
         #endregion
-
 
         #region Count Neighbors
 
@@ -443,7 +445,7 @@ namespace Ortiz__Christian___GOL
         #endregion
 
         #region Reset Universe
-        private void ResetToolStripMenuItem_Click(object sender, EventArgs e)
+        private void resetToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             // reset generations
             generations = 0;
@@ -487,7 +489,9 @@ namespace Ortiz__Christian___GOL
             }
             toolStripStatusLabelLivingCells.Text = "Living Cells = " + livingCells.ToString();
 
-        } 
+        }
         #endregion
+
+        
     }
 }

@@ -17,7 +17,8 @@ namespace Ortiz__Christian___GOL
             InitializeComponent();
         }
 
-       public int UniWidth
+        #region Options Dialog Properties
+        public int UniWidth
         {
             get
             {
@@ -50,6 +51,8 @@ namespace Ortiz__Christian___GOL
             {
                 GenerationInterval.Value = value;
             }
-        }
+        } 
+        #endregion
+
     }
 }
