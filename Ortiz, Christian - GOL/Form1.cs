@@ -373,9 +373,9 @@ namespace Ortiz__Christian___GOL
             // create instance of random
             Random rnd = new Random();
             // iterate through universe x and y axis
-            for (int y = 0; y < universe.GetLength(1); y++)
+            for (int y = 0; y < gridHeight; y++)
             {
-                for (int x = 0; x < universe.GetLength(0); x++)
+                for (int x = 0; x < gridWidth; x++)
                 {
                     // create random number between 0 and 2
                     int randomNum = rnd.Next(0, 3);
