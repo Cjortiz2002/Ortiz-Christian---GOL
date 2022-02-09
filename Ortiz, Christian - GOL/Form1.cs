@@ -510,6 +510,7 @@ namespace Ortiz__Christian___GOL
             gridColor = Properties.Settings.Default.GridColor;
             cellColor = Properties.Settings.Default.CellColor;
             gridHeight = Properties.Settings.Default.GridHeight;
+            timer.Interval = Properties.Settings.Default.TimerInterval;
             gridWidth = Properties.Settings.Default.GridWidth;
             graphicsPanel1.Invalidate();
         }
