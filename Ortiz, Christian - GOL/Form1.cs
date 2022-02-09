@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Ortiz__Christian___GOL
         Timer timer = new Timer();
 
         // Generation count
-        int generations = 0; 
+        int generations = 0;
 
         #endregion
 
@@ -53,10 +54,11 @@ namespace Ortiz__Christian___GOL
         private void NextGeneration()
         {
             // iterate through universe y axis
-            for (int y = 0; y < universe.GetLength(1); y++)
+            // Iterate through the universe in the y, top to bottom
+            for (int y = 0; y < gridHeight; y++)
             {
-                // iterate through universe x axis
-                for (int x = 0; x < universe.GetLength(0); x++)
+                // Iterate through the universe in the x, left to right
+                for (int x = 0; x < gridWidth; x++)
                 {
                     // get neighbor count for each cell
                     int finiteCount = CountNeighborsToroidal(x, y);
@@ -230,10 +232,10 @@ namespace Ortiz__Christian___GOL
             Brush cellBrush = new SolidBrush(cellColor);
 
             // Iterate through the universe in the y, top to bottom
-            for (int y = 0; y < universe.GetLength(1); y++)
+            for (int y = 0; y < gridHeight; y++)
             {
                 // Iterate through the universe in the x, left to right
-                for (int x = 0; x < universe.GetLength(0); x++)
+                for (int x = 0; x < gridWidth; x++)
                 {
                     // printing number of neighbors in the middle of cells
                     int neighbors = CountNeighborsFinite(x, y);
@@ -255,10 +257,14 @@ namespace Ortiz__Christian___GOL
                     {
                         e.Graphics.FillRectangle(cellBrush, cellRect);
                     }
-
+                    // if check for toggalable options
                     // Outline the cell with a pen
-                    e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
-                    if (neighbors > 0)
+                    if (toggleGridToolStripMenuItem.Checked)
+                    {
+                        e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+                    }
+
+                    if (neighbors > 0 && toggleNeighborCountToolStripMenuItem.Checked)
                     {
                         e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Black, cellRect, stringFormat);
 
@@ -447,6 +453,11 @@ namespace Ortiz__Christian___GOL
         #region Reset Universe
         private void resetToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            // reset toggles to true
+            toggleGridToolStripMenuItem.Checked = true;
+            toggleHUDToolStripMenuItem.Checked = true;
+            toggleNeighborCountToolStripMenuItem.Checked = true;
+
             // reset generations
             generations = 0;
             // Update status strip generations
@@ -490,8 +501,53 @@ namespace Ortiz__Christian___GOL
             toolStripStatusLabelLivingCells.Text = "Living Cells = " + livingCells.ToString();
 
         }
+
+
         #endregion
 
-        
+        #region Save as Functionality
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "All Files|*.*|Cells|*.cells";
+            dlg.FilterIndex = 2; dlg.DefaultExt = "cells";
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                StreamWriter writer = new StreamWriter(dlg.FileName);
+
+                // Write any comments you want to include first.
+                // Prefix all comment strings with an exclamation point.
+                // Use WriteLine to write the strings to the file. 
+                // It appends a CRLF for you.
+                writer.WriteLine("!Universe");
+
+                // Iterate through the universe one row at a time.
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    // Iterate through the universe in the x, left to right
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+                        if (universe[x, y])
+                        {
+                            // appends an O for alive cells
+                            writer.Write('O');
+                        }
+                        else
+                        {
+                            // appends a . for dead cells
+                            writer.Write('.');
+                        }
+                    }
+                    // goes to next row when complete with row
+                    writer.Write('\n');
+                }
+
+                // After all rows and columns have been written then close the file.
+                writer.Close();
+            }
+        }
+        #endregion
+
     }
 }
