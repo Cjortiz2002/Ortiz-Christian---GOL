@@ -59,6 +59,7 @@ namespace Ortiz__Christian___GOL
         // Calculate the next generation of cells
         private void NextGeneration()
         {
+            int neighborCount = 0;
             // iterate through universe y axis
             // Iterate through the universe in the y, top to bottom
             for (int y = 0; y < gridHeight; y++)
@@ -66,22 +67,29 @@ namespace Ortiz__Christian___GOL
                 // Iterate through the universe in the x, left to right
                 for (int x = 0; x < gridWidth; x++)
                 {
-                    // get neighbor count for each cell
-                    int finiteCount = CountNeighborsToroidal(x, y);
 
+                    // get neighbor count for each cell
+                    if (toroidalToolStripMenuItem.Checked)
+                    {
+                        neighborCount = CountNeighborsToroidal(x, y);
+                    }
+                    else if (finiteToolStripMenuItem.Checked)
+                    {
+                        neighborCount = CountNeighborsFinite(x, y);
+                    }
                     // Applying rules to cells
                     // Underpopulation/Overpopulation, cell dies
-                    if (universe[x, y] == true && finiteCount < 2 || finiteCount > 3)
+                    if (universe[x, y] == true && neighborCount < 2 || neighborCount > 3)
                     {
                         scratchPad[x, y] = false;
                     }
                     // living cell lives into next generation
-                    else if (universe[x, y] == true && finiteCount == 2 || finiteCount == 3)
+                    else if (universe[x, y] == true && neighborCount == 2 || neighborCount == 3)
                     {
                         scratchPad[x, y] = true;
                     }
                     // reproduction, dead cell comes back to live
-                    else if (universe[x, y] == false && finiteCount == 3)
+                    else if (universe[x, y] == false && neighborCount == 3)
                     {
                         scratchPad[x, y] = true;
 
@@ -237,6 +245,7 @@ namespace Ortiz__Christian___GOL
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
 
+            int neighbors = 0;
             // Iterate through the universe in the y, top to bottom
             for (int y = 0; y < gridHeight; y++)
             {
@@ -244,7 +253,14 @@ namespace Ortiz__Christian___GOL
                 for (int x = 0; x < gridWidth; x++)
                 {
                     // printing number of neighbors in the middle of cells
-                    int neighbors = CountNeighborsFinite(x, y);
+                    if (toroidalToolStripMenuItem.Checked)
+                    {
+                        neighbors = CountNeighborsToroidal(x, y);
+                    }
+                    else if (finiteToolStripMenuItem.Checked)
+                    {
+                        neighbors = CountNeighborsFinite(x, y);
+                    }
                     Font font = new Font("Arial", 10f);
 
                     StringFormat stringFormat = new StringFormat();
@@ -348,8 +364,10 @@ namespace Ortiz__Christian___GOL
         {
             // reset generations
             generations = 0;
+            livingCells = 0;
             // Update status strip generations
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelLivingCells.Text = "Living Cells = " + livingCells.ToString();
             // pause timer
             timer.Enabled = false;
 
@@ -475,11 +493,12 @@ namespace Ortiz__Christian___GOL
             toggleHUDToolStripMenuItem.Checked = true;
             toggleNeighborCountToolStripMenuItem.Checked = true;
 
-            // reset generations
+            // reset generations and living cells
             generations = 0;
+            livingCells = 0;
             // Update status strip generations
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
-
+            toolStripStatusLabelLivingCells.Text = "Living Cells = " + livingCells.ToString();
             // pause and reset timer 
             timer.Enabled = false;
             timer.Interval = 100;
@@ -495,7 +514,7 @@ namespace Ortiz__Christian___GOL
 
             // reset universe to default 20 x 20 size
             ResizeUniverse(gridHeight, gridWidth, ref universe, ref scratchPad);
-            // iterate through universe y axis
+            // clear universe
             Array.Clear(universe, 0, universe.Length);
 
             // invalidate graphics
@@ -504,14 +523,32 @@ namespace Ortiz__Christian___GOL
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.Reload();
+            // reset toggles to true
+            toggleGridToolStripMenuItem.Checked = true;
+            toggleHUDToolStripMenuItem.Checked = true;
+            toggleNeighborCountToolStripMenuItem.Checked = true;
 
+            // reset generations and living cells
+            generations = 0;
+            livingCells = 0;
+            // Update status strip generations
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelLivingCells.Text = "Living Cells = " + livingCells.ToString();
+            // pause timer
+            timer.Enabled = false;
+            
+            // reload properties
+            Properties.Settings.Default.Reload();
+            timer.Interval = Properties.Settings.Default.TimerInterval;
             graphicsPanel1.BackColor = Properties.Settings.Default.BackColor;
             gridColor = Properties.Settings.Default.GridColor;
             cellColor = Properties.Settings.Default.CellColor;
             gridHeight = Properties.Settings.Default.GridHeight;
-            timer.Interval = Properties.Settings.Default.TimerInterval;
             gridWidth = Properties.Settings.Default.GridWidth;
+            // resize universe to reloaded size
+            ResizeUniverse(gridHeight, gridWidth, ref universe, ref scratchPad);
+            // clear universe
+            Array.Clear(universe, 0, universe.Length);
             graphicsPanel1.Invalidate();
         }
 
@@ -535,7 +572,6 @@ namespace Ortiz__Christian___GOL
                 }
             }
             toolStripStatusLabelLivingCells.Text = "Living Cells = " + livingCells.ToString();
-
         }
 
 
@@ -683,6 +719,18 @@ namespace Ortiz__Christian___GOL
 
         private void toggleNeighborCountToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            graphicsPanel1.Invalidate();
+        }
+
+        private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            finiteToolStripMenuItem.Checked = false;
+            graphicsPanel1.Invalidate();
+        }
+
+        private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toroidalToolStripMenuItem.Checked = false;
             graphicsPanel1.Invalidate();
         }
 
