@@ -562,6 +562,9 @@ namespace Ortiz__Christian___GOL
             toggleGridToolStripMenuItem.Checked = true;
             toggleHUDToolStripMenuItem.Checked = true;
             toggleNeighborCountToolStripMenuItem.Checked = true;
+            ContextToggleGridToolStripMenuItem.Checked = true;
+            ContextToggleHUDToolStripMenuItem.Checked = true;
+            ContextToggleNeighborCountToolStripMenuItem.Checked = true;
 
             // reset generations and living cells
             generations = 0;
@@ -597,6 +600,9 @@ namespace Ortiz__Christian___GOL
             toggleGridToolStripMenuItem.Checked = true;
             toggleHUDToolStripMenuItem.Checked = true;
             toggleNeighborCountToolStripMenuItem.Checked = true;
+            ContextToggleGridToolStripMenuItem.Checked = true;
+            ContextToggleHUDToolStripMenuItem.Checked = true;
+            ContextToggleNeighborCountToolStripMenuItem.Checked = true;
 
             // reset generations and living cells
             generations = 0;
@@ -899,5 +905,6 @@ namespace Ortiz__Christian___GOL
 
         #endregion
 
+        #endregion
     }
 }
