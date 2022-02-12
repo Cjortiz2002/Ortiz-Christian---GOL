@@ -777,6 +777,8 @@ namespace Ortiz__Christian___GOL
         #endregion
 
         #region Toggle click events
+
+        #region View Menu Toggles
         private void toggleGridToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (toggleGridToolStripMenuItem.Checked)
@@ -815,7 +817,9 @@ namespace Ortiz__Christian___GOL
             }
             graphicsPanel1.Invalidate();
         }
+        #endregion
 
+        #region Context Menu Toggles
         private void ContextToggleGridToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ContextToggleGridToolStripMenuItem.Checked)
@@ -853,7 +857,8 @@ namespace Ortiz__Christian___GOL
                 toggleNeighborCountToolStripMenuItem.Checked = false;
             }
             graphicsPanel1.Invalidate();
-        }
+        } 
+        #endregion
 
         #region boundary type click events
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
