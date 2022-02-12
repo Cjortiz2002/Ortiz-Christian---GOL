@@ -76,6 +76,10 @@ namespace Ortiz__Christian___GOL
             this.backColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cellColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextToggleGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextToggleHUDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextToggleNeighborCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphicsPanel1 = new Ortiz__Christian___GOL.GraphicsPanel();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -443,30 +447,71 @@ namespace Ortiz__Christian___GOL
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.backColorToolStripMenuItem,
             this.gridColorToolStripMenuItem,
-            this.cellColorToolStripMenuItem});
+            this.cellColorToolStripMenuItem,
+            this.viewToolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(132, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 114);
             // 
             // backColorToolStripMenuItem
             // 
             this.backColorToolStripMenuItem.Name = "backColorToolStripMenuItem";
-            this.backColorToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.backColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.backColorToolStripMenuItem.Text = "Back Color";
             this.backColorToolStripMenuItem.Click += new System.EventHandler(this.BackColorToolStripMenuItem_Click);
             // 
             // gridColorToolStripMenuItem
             // 
             this.gridColorToolStripMenuItem.Name = "gridColorToolStripMenuItem";
-            this.gridColorToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.gridColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.gridColorToolStripMenuItem.Text = "Grid Color";
             this.gridColorToolStripMenuItem.Click += new System.EventHandler(this.GridColorToolStripMenuItem_Click);
             // 
             // cellColorToolStripMenuItem
             // 
             this.cellColorToolStripMenuItem.Name = "cellColorToolStripMenuItem";
-            this.cellColorToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.cellColorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cellColorToolStripMenuItem.Text = "Cell Color";
             this.cellColorToolStripMenuItem.Click += new System.EventHandler(this.CellColorToolStripMenuItem_Click);
+            // 
+            // viewToolStripMenuItem1
+            // 
+            this.viewToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ContextToggleGridToolStripMenuItem,
+            this.ContextToggleHUDToolStripMenuItem,
+            this.ContextToggleNeighborCountToolStripMenuItem});
+            this.viewToolStripMenuItem1.Name = "viewToolStripMenuItem1";
+            this.viewToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.viewToolStripMenuItem1.Text = "View";
+            // 
+            // ContextToggleGridToolStripMenuItem
+            // 
+            this.ContextToggleGridToolStripMenuItem.Checked = true;
+            this.ContextToggleGridToolStripMenuItem.CheckOnClick = true;
+            this.ContextToggleGridToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ContextToggleGridToolStripMenuItem.Name = "ContextToggleGridToolStripMenuItem";
+            this.ContextToggleGridToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.ContextToggleGridToolStripMenuItem.Text = "Toggle Grid";
+            this.ContextToggleGridToolStripMenuItem.Click += new System.EventHandler(this.ContextToggleGridToolStripMenuItem_Click);
+            // 
+            // ContextToggleHUDToolStripMenuItem
+            // 
+            this.ContextToggleHUDToolStripMenuItem.Checked = true;
+            this.ContextToggleHUDToolStripMenuItem.CheckOnClick = true;
+            this.ContextToggleHUDToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ContextToggleHUDToolStripMenuItem.Name = "ContextToggleHUDToolStripMenuItem";
+            this.ContextToggleHUDToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.ContextToggleHUDToolStripMenuItem.Text = "Toggle HUD";
+            this.ContextToggleHUDToolStripMenuItem.Click += new System.EventHandler(this.ContextToggleHUDToolStripMenuItem_Click);
+            // 
+            // ContextToggleNeighborCountToolStripMenuItem
+            // 
+            this.ContextToggleNeighborCountToolStripMenuItem.Checked = true;
+            this.ContextToggleNeighborCountToolStripMenuItem.CheckOnClick = true;
+            this.ContextToggleNeighborCountToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ContextToggleNeighborCountToolStripMenuItem.Name = "ContextToggleNeighborCountToolStripMenuItem";
+            this.ContextToggleNeighborCountToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.ContextToggleNeighborCountToolStripMenuItem.Text = "Toggle Neighbor Count";
+            this.ContextToggleNeighborCountToolStripMenuItem.Click += new System.EventHandler(this.ContextToggleNeighborCountToolStripMenuItem_Click);
             // 
             // graphicsPanel1
             // 
@@ -553,6 +598,10 @@ namespace Ortiz__Christian___GOL
         private System.Windows.Forms.ToolStripMenuItem finiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem randomSeedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem randomFromTimeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem ContextToggleGridToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ContextToggleHUDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ContextToggleNeighborCountToolStripMenuItem;
     }
 }
 

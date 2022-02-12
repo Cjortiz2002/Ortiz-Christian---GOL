@@ -779,16 +779,79 @@ namespace Ortiz__Christian___GOL
         #region Toggle click events
         private void toggleGridToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (toggleGridToolStripMenuItem.Checked)
+            {
+                ContextToggleGridToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                ContextToggleGridToolStripMenuItem.Checked = false;
+            }
             graphicsPanel1.Invalidate();
         }
 
         private void toggleHUDToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (toggleHUDToolStripMenuItem.Checked)
+            {
+                ContextToggleHUDToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                ContextToggleHUDToolStripMenuItem.Checked = false;
+            }
             graphicsPanel1.Invalidate();
         }
 
         private void toggleNeighborCountToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (toggleNeighborCountToolStripMenuItem.Checked)
+            {
+                ContextToggleNeighborCountToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                ContextToggleNeighborCountToolStripMenuItem.Checked = false;
+            }
+            graphicsPanel1.Invalidate();
+        }
+
+        private void ContextToggleGridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ContextToggleGridToolStripMenuItem.Checked)
+            {
+                toggleGridToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                toggleGridToolStripMenuItem.Checked = false;
+            }
+            graphicsPanel1.Invalidate();
+        }
+
+        private void ContextToggleHUDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ContextToggleHUDToolStripMenuItem.Checked)
+            {
+                toggleHUDToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                toggleHUDToolStripMenuItem.Checked = false;
+            }
+            graphicsPanel1.Invalidate();
+        }
+
+        private void ContextToggleNeighborCountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ContextToggleNeighborCountToolStripMenuItem.Checked)
+            {
+                toggleNeighborCountToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                toggleNeighborCountToolStripMenuItem.Checked = false;
+            }
             graphicsPanel1.Invalidate();
         }
 
@@ -825,11 +888,12 @@ namespace Ortiz__Christian___GOL
 
             }
             graphicsPanel1.Invalidate();
-        } 
-        #endregion
+        }
+
 
         #endregion
 
+        #endregion
 
     }
 }
