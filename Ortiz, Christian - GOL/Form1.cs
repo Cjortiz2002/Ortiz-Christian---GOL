@@ -35,6 +35,10 @@ namespace Ortiz__Christian___GOL
         // Generation count
         int generations = 0;
 
+        // Current Seed
+        int Seed = 0;
+
+
         #endregion
 
         #region Constructor
@@ -116,6 +120,7 @@ namespace Ortiz__Christian___GOL
 
             // Update status strip generations
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            GetLivingCells(ref universe);
 
 
             // Invalidate the graphics panel
@@ -316,7 +321,7 @@ namespace Ortiz__Christian___GOL
 
                 // Toggle the cell's state
                 universe[x, y] = !universe[x, y];
-
+                GetLivingCells(ref universe);
                 // Tell Windows you need to repaint
                 graphicsPanel1.Invalidate();
             }
@@ -379,8 +384,15 @@ namespace Ortiz__Christian___GOL
         }
         #endregion
 
-        #region Random Seed
-        private void RandomSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        #region Randomize
+
+        #region Randomize from Time
+        private void randomFromTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RandomizeTime();
+            graphicsPanel1.Invalidate();
+        }
+        private void RandomizeTime()
         {
             // reset generations
             generations = 0;
@@ -409,8 +421,54 @@ namespace Ortiz__Christian___GOL
                     }
                 }
             }
+            GetLivingCells(ref universe);
             graphicsPanel1.Invalidate();
         }
+        #endregion
+
+        #region Randomize from Seed
+        private void RandomSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RandomDialog dlg = new RandomDialog();
+            dlg.Seed = Seed;
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                Seed = dlg.Seed;
+                RandomizeSeed(dlg.Seed);
+            }
+            GetLivingCells(ref universe);
+            graphicsPanel1.Invalidate();
+
+
+
+        }
+        private void RandomizeSeed(int seed)
+        {
+
+            Random rnd = new Random(seed);
+            // iterate through universe x and y axis
+            for (int y = 0; y < gridHeight; y++)
+            {
+                for (int x = 0; x < gridWidth; x++)
+                {
+                    // create random number between 0 and 2
+                    int randomNum = rnd.Next(0, 3);
+                    if (randomNum == 0)
+                    {
+                        // if random number is 0 cell is alive (on)
+                        universe[x, y] = true;
+                    }
+                    else
+                    {
+                        // if any other number cell is dead (off)
+                        universe[x, y] = false;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Color Dialog
@@ -536,7 +594,7 @@ namespace Ortiz__Christian___GOL
             toolStripStatusLabelLivingCells.Text = "Living Cells = " + livingCells.ToString();
             // pause timer
             timer.Enabled = false;
-            
+
             // reload properties
             Properties.Settings.Default.Reload();
             timer.Interval = Properties.Settings.Default.TimerInterval;
@@ -592,27 +650,29 @@ namespace Ortiz__Christian___GOL
                 // Prefix all comment strings with an exclamation point.
                 // Use WriteLine to write the strings to the file. 
                 // It appends a CRLF for you.
-                writer.WriteLine("!Universe");
+                writer.WriteLine("!Your Universe");
 
                 // Iterate through the universe one row at a time.
-                for (int y = 0; y < universe.GetLength(1); y++)
+                for (int y = 0; y < gridHeight; y++)
                 {
                     // Iterate through the universe in the x, left to right
-                    for (int x = 0; x < universe.GetLength(0); x++)
+                    string currentRow = string.Empty;
+                    for (int x = 0; x < gridWidth; x++)
                     {
                         if (universe[x, y])
                         {
                             // appends an O for alive cells
-                            writer.Write('O');
+                            currentRow += "O";
                         }
                         else
                         {
                             // appends a . for dead cells
-                            writer.Write('.');
+                            currentRow += ".";
                         }
                     }
-                    // goes to next row when complete with row
-                    writer.Write('\n');
+                    // writes current row to file
+                    writer.WriteLine(currentRow);
+
                 }
 
                 // After all rows and columns have been written then close the file.
@@ -621,88 +681,86 @@ namespace Ortiz__Christian___GOL
         }
         #endregion
 
-        #region Open File Functionality ( Currently Commented due to not working)
+        #region Open File Functionality
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //    OpenFileDialog dlg = new OpenFileDialog();
-            //    dlg.Filter = "All Files|*.*|Cells|*.cells";
-            //    dlg.FilterIndex = 2;
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "All Files|*.*|Cells|*.cells";
+            dlg.FilterIndex = 2;
 
-            //    if (DialogResult.OK == dlg.ShowDialog())
-            //    {
-            //        StreamReader reader = new StreamReader(dlg.FileName);
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                StreamReader reader = new StreamReader(dlg.FileName);
 
-            //        // Create a couple variables to calculate the width and height
-            //        // of the data in the file.
-            //        int maxWidth = 0;
-            //        int maxHeight = 0;
-            //        int currentRow = 0;
-            //        // Iterate through the file once to get its size.
-            //        while (!reader.EndOfStream)
-            //        {
-            //            // Read one row at a time.
-            //            string row = reader.ReadLine();
+                // Create a couple variables to calculate the width and height
+                // of the data in the file.
+                int maxWidth = 0;
+                int maxHeight = 0;
+                int currentRow = 0;
+                // Iterate through the file once to get its size.
+                while (!reader.EndOfStream)
+                {
+                    // Read one row at a time.
+                    string row = reader.ReadLine();
 
-            //            // If the row begins with '!' then it is a comment
-            //            // and should be ignored.
-            //            if (row.StartsWith("!"))
-            //            {
-            //                break;
-            //            }
-            //            // If the row is not a comment then it is a row of cells.
-            //            // Increment the maxHeight variable for each row read.
-            //            else
-            //            {
-            //                // Get the length of the current row string
-            //                // and adjust the maxWidth variable if necessary.
-            //                maxHeight++;
-            //                maxWidth = row.Length;
-            //            }
+                    // If the row begins with '!' then it is a comment
+                    // and should be ignored.
+                    if (row.StartsWith("!"))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        maxHeight++;
+                        // Get the length of the current row string
+                        // and adjust the maxWidth variable if necessary.
+                        maxWidth = row.Length;
+                    }
 
-            //        }
-            //        // Resize the current universe and scratchPad
-            //        // to the width and height of the file calculated above.
-            //        ResizeUniverse(maxHeight, maxWidth, ref universe, ref scratchPad);
+                }
+                // Resize the current universe and scratchPad
+                // to the width and height of the file calculated above.
+                ResizeUniverse(maxHeight, maxWidth, ref universe, ref scratchPad);
 
-            //        // Reset the file pointer back to the beginning of the file.
-            //        reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                // Reset the file pointer back to the beginning of the file.
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
 
-            //        // Iterate through the file again, this time reading in the cells.
-            //        while (!reader.EndOfStream)
-            //        {
-            //            // Read one row at a time.
-            //            string row = reader.ReadLine();
+                // Iterate through the file again, this time reading in the cells.
+                while (!reader.EndOfStream)
+                {
+                    // Read one row at a time.
+                    string row = reader.ReadLine();
 
-            //            // ignores row if it begins with a '!'
-            //            if (row.StartsWith("!"))
-            //            {
+                    // ignores row if it begins with a '!'
+                    if (row.StartsWith("!"))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        // itterates through current row
+                        for (int xPos = 0; xPos < row.Length; xPos++)
+                        {
+                            // sets current cell to alive if a O is found at row[xPos]
+                            if (row[xPos] == 'O')
+                            {
+                                universe[xPos, currentRow] = true;
+                            }
+                            // sets current cell to dead if a period is found at row[xPos]
+                            else if (row[xPos] == '.')
+                            {
+                                universe[xPos, currentRow] = false;
+                            }
+                        }
+                        currentRow++;
+                    }
 
-            //                break;
-            //            }
-            //            else
-            //            {
-            //                // itterates through current row
-            //                for (int xPos = 0; xPos < row.Length; xPos++)
-            //                {
-            //                    // sets current cell to alive if a O is found at row[xPos]
-            //                    if (row[xPos] == 'O')
-            //                    {
-            //                        universe[xPos, currentRow] = true;
-            //                    }
-            //                    // sets current cell to dead if a period is found at row[xPos]
-            //                    else if (row[xPos] == '.')
-            //                    {
-            //                        universe[xPos, currentRow] = false;
-            //                    }
+                }
 
-            //                }
-            //            }
-
-            //        }
-
-            //        // Close the file.
-            //        reader.Close();
-            //    } 
+                // Close the file.
+                reader.Close();
+                GetLivingCells(ref universe);
+            }
         }
         #endregion
 
@@ -725,12 +783,24 @@ namespace Ortiz__Christian___GOL
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             finiteToolStripMenuItem.Checked = false;
+            // catch in case user trys to uncheck the current state they are in
+            // this is to prevent count neighbor from breaking
+            if (toroidalToolStripMenuItem.Checked == false && finiteToolStripMenuItem.Checked == false)
+            {
+                toroidalToolStripMenuItem.Checked = true;
+            }
             graphicsPanel1.Invalidate();
         }
 
         private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             toroidalToolStripMenuItem.Checked = false;
+            // catch in case user trys to uncheck the current state they are in
+            // this is to prevent count neighbor from breaking
+            if (finiteToolStripMenuItem.Checked == false && toroidalToolStripMenuItem.Checked == false)
+            {
+                finiteToolStripMenuItem.Checked = true;
+            }
             graphicsPanel1.Invalidate();
         }
 
