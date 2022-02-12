@@ -858,7 +858,6 @@ namespace Ortiz__Christian___GOL
             }
             graphicsPanel1.Invalidate();
         }
-        #endregion
 
         #region boundary type click events
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
