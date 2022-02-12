@@ -25,10 +25,11 @@ namespace Ortiz__Christian___GOL
         // Drawing colors
         Color gridColor = Color.Black;
         Color cellColor = Color.Gray;
-
         // livng cells
         int livingCells = 0;
 
+        // Boundary Type
+        string boundary = "";
         // The Timer class
         Timer timer = new Timer();
 
@@ -261,10 +262,12 @@ namespace Ortiz__Christian___GOL
                     if (toroidalToolStripMenuItem.Checked)
                     {
                         neighbors = CountNeighborsToroidal(x, y);
+                        boundary = "Toroidal";
                     }
                     else if (finiteToolStripMenuItem.Checked)
                     {
                         neighbors = CountNeighborsFinite(x, y);
+                        boundary = "Finite";
                     }
                     Font font = new Font("Arial", 10f);
 
@@ -295,6 +298,15 @@ namespace Ortiz__Christian___GOL
                     {
                         e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Black, cellRect, stringFormat);
 
+                    }
+
+                    if (toggleHUDToolStripMenuItem.Checked)
+                    {
+                        font = new Font("Arial", 13f);
+                        string hud = "Generations: " + generations + "\nLiving Cell: " + livingCells + "\nBoundary Type: " + boundary + "\nUniverse Size: Width = " + gridWidth + " Height = " + gridHeight;
+                        stringFormat.Alignment = StringAlignment.Near;
+                        stringFormat.LineAlignment = StringAlignment.Near;
+                        e.Graphics.DrawString(hud.ToString(), font, Brushes.BlueViolet, ClientRectangle, stringFormat);
                     }
 
                 }
@@ -780,31 +792,44 @@ namespace Ortiz__Christian___GOL
             graphicsPanel1.Invalidate();
         }
 
+        #region boundary type click events
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            finiteToolStripMenuItem.Checked = false;
+
             // catch in case user trys to uncheck the current state they are in
             // this is to prevent count neighbor from breaking
             if (toroidalToolStripMenuItem.Checked == false && finiteToolStripMenuItem.Checked == false)
             {
                 toroidalToolStripMenuItem.Checked = true;
             }
+            else
+            {
+                finiteToolStripMenuItem.Checked = false;
+                boundary = "Toroidal";
+            }
             graphicsPanel1.Invalidate();
         }
 
         private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            toroidalToolStripMenuItem.Checked = false;
             // catch in case user trys to uncheck the current state they are in
             // this is to prevent count neighbor from breaking
             if (finiteToolStripMenuItem.Checked == false && toroidalToolStripMenuItem.Checked == false)
             {
                 finiteToolStripMenuItem.Checked = true;
             }
+            else
+            {
+                toroidalToolStripMenuItem.Checked = false;
+                boundary = "Finite";
+
+            }
             graphicsPanel1.Invalidate();
-        }
+        } 
+        #endregion
 
         #endregion
+
 
     }
 }
