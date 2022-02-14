@@ -549,6 +549,9 @@ namespace Ortiz__Christian___GOL
 
         private void ResizeUniverse(int height, int width, ref bool[,] tempunivers, ref bool[,] tempScratchpad)
         {
+            timer.Enabled = false;
+            generations = 0;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
             gridHeight = height;
             gridWidth = width;
             universe = new bool[gridWidth, gridHeight];
