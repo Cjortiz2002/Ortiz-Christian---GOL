@@ -134,7 +134,6 @@ namespace Ortiz__Christian___GOL
         private void Timer_Tick(object sender, EventArgs e)
         {
             NextGeneration();
-            GetLivingCells(ref universe);
         }
         #endregion
 
@@ -300,16 +299,19 @@ namespace Ortiz__Christian___GOL
 
                     }
 
-                    if (toggleHUDToolStripMenuItem.Checked)
-                    {
-                        font = new Font("Arial", 13f);
-                        string hud = "Generations: " + generations + "\nLiving Cell: " + livingCells + "\nBoundary Type: " + boundary + "\nUniverse Size: Width = " + gridWidth + " Height = " + gridHeight;
-                        stringFormat.Alignment = StringAlignment.Near;
-                        stringFormat.LineAlignment = StringAlignment.Near;
-                        e.Graphics.DrawString(hud.ToString(), font, Brushes.BlueViolet, ClientRectangle, stringFormat);
-                    }
 
                 }
+            }
+
+            if (toggleHUDToolStripMenuItem.Checked)
+            {
+
+                Font font = new Font("Arial", 13f);
+                StringFormat stringFormat = new StringFormat();
+                string hud = "Generations: " + generations + "\nLiving Cell: " + livingCells + "\nBoundary Type: " + boundary + "\nUniverse Size: Width = " + gridWidth + " Height = " + gridHeight;
+                stringFormat.Alignment = StringAlignment.Near;
+                stringFormat.LineAlignment = StringAlignment.Near;
+                e.Graphics.DrawString(hud, font, Brushes.BlueViolet, ClientRectangle, stringFormat);
             }
 
             // Cleaning up pens and brushes
