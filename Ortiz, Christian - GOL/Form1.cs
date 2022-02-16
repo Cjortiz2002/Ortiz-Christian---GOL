@@ -39,6 +39,9 @@ namespace Ortiz__Christian___GOL
         // Current Seed
         int Seed = 0;
 
+        // Target Generation to run to
+        int TargetGen = 0;
+        int runToCounter = 0;
 
         #endregion
 
@@ -118,7 +121,8 @@ namespace Ortiz__Christian___GOL
 
             // Increment generation count
             generations++;
-
+            // Increment runToCounter every generation
+            runToCounter++;
             // Update status strip generations
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
             GetLivingCells(ref universe);
@@ -133,6 +137,11 @@ namespace Ortiz__Christian___GOL
         // The event called by the timer every Interval milliseconds.
         private void Timer_Tick(object sender, EventArgs e)
         {
+            // disable the counter after the set number of run to generations is reached
+            if (runToCounter == TargetGen - 1)
+            {
+                timer.Enabled = false;
+            }
             NextGeneration();
         }
         #endregion
@@ -288,11 +297,13 @@ namespace Ortiz__Christian___GOL
                     }
                     // if check for toggalable options
                     // Outline the cell with a pen
+                    // Draws Grid if tool strip is checked
                     if (toggleGridToolStripMenuItem.Checked)
                     {
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
                     }
 
+                    // Draws Neighbor count if tool strip is checked and the neighbor count is not 0
                     if (neighbors > 0 && toggleNeighborCountToolStripMenuItem.Checked)
                     {
                         e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Black, cellRect, stringFormat);
@@ -303,6 +314,7 @@ namespace Ortiz__Christian___GOL
                 }
             }
 
+            // Draws Hud if tool strip is checked
             if (toggleHUDToolStripMenuItem.Checked)
             {
 
@@ -911,5 +923,27 @@ namespace Ortiz__Christian___GOL
         #endregion
 
         #endregion
+
+        #region Run Set Generations
+        private void runToGenerationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RunToGenerationDialog dlg = new RunToGenerationDialog();
+            dlg.TargetGeneration = TargetGen;
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                // checks if counter is not zero to avoid it running if user inputs zero
+                if (runToCounter != 0)
+                {
+                    TargetGen = dlg.TargetGeneration;
+                    runToCounter = 0;
+                    timer.Enabled = true;
+                }
+
+            }
+
+        }
+        #endregion
+
     }
+
 }

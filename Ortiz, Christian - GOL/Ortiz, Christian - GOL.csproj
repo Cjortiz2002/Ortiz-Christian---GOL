@@ -69,6 +69,12 @@
     <Compile Include="RandomDialog.Designer.cs">
       <DependentUpon>RandomDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="RunToGenerationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RunToGenerationDialog.Designer.cs">
+      <DependentUpon>RunToGenerationDialog.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -87,6 +93,9 @@
     </Compile>
     <EmbeddedResource Include="RandomDialog.resx">
       <DependentUpon>RandomDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RunToGenerationDialog.resx">
+      <DependentUpon>RunToGenerationDialog.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

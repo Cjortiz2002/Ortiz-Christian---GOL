@@ -60,6 +60,7 @@ namespace Ortiz__Christian___GOL
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.runToGenerationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -270,7 +271,8 @@ namespace Ortiz__Christian___GOL
             this.optionsToolStripMenuItem1,
             this.toolStripSeparator3,
             this.reloadToolStripMenuItem,
-            this.resetToolStripMenuItem1});
+            this.resetToolStripMenuItem1,
+            this.runToGenerationToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -282,7 +284,7 @@ namespace Ortiz__Christian___GOL
             this.gridColorToolStripMenuItem1,
             this.cellColorToolStripMenuItem1});
             this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
-            this.colorToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.colorToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.colorToolStripMenuItem.Text = "Color";
             // 
             // backColorToolStripMenuItem1
@@ -309,28 +311,35 @@ namespace Ortiz__Christian___GOL
             // optionsToolStripMenuItem1
             // 
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
-            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
             this.optionsToolStripMenuItem1.Text = "Options";
             this.optionsToolStripMenuItem1.Click += new System.EventHandler(this.OptionsToolStripMenuItem1_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(229, 6);
             // 
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
             // resetToolStripMenuItem1
             // 
             this.resetToolStripMenuItem1.Name = "resetToolStripMenuItem1";
-            this.resetToolStripMenuItem1.Size = new System.Drawing.Size(116, 22);
+            this.resetToolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
             this.resetToolStripMenuItem1.Text = "Reset";
             this.resetToolStripMenuItem1.Click += new System.EventHandler(this.resetToolStripMenuItem1_Click);
+            // 
+            // runToGenerationToolStripMenuItem
+            // 
+            this.runToGenerationToolStripMenuItem.Name = "runToGenerationToolStripMenuItem";
+            this.runToGenerationToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.runToGenerationToolStripMenuItem.Text = "Run set number of generation";
+            this.runToGenerationToolStripMenuItem.Click += new System.EventHandler(this.runToGenerationToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
@@ -602,6 +611,7 @@ namespace Ortiz__Christian___GOL
         private System.Windows.Forms.ToolStripMenuItem ContextToggleGridToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ContextToggleHUDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ContextToggleNeighborCountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem runToGenerationToolStripMenuItem;
     }
 }
 
